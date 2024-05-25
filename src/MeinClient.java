@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -50,6 +51,25 @@ public class MeinClient {
 
 //        int [] values = {3, 4, 5, 1, 3, 2, 3, 1, 4, 3, 5, 2, 1, 4, 2, 2, 3, 4, 1, 5, 5, 2, 3, 1, 1, 2, 2, 4, 2, 4, 1, 2};
         int [] values = {4, 6, 7, 9, 1, 2, 0, 1, 8, 1, 9, 2, 6, 4, 7, 9, 8, 1, 9, 2, 1, 2, 0, 1, 4, 6, 7, 9, 7, 6, 9, 4};
+        String[][] board = {
+                {"", "", "p1", "p1", "p1", "", ""},
+                {"", "", "", "p1", "", "", ""},
+                {"p2", "", "", "", "", "", "p4"},
+                {"p2", "p2", "", "", "", "p4", "p4"},
+                {"p2", "", "", "", "", "", "p4"},
+                {"", "", "", "p3", "", "", ""},
+                {"", "", "p3", "p3", "p3", "", ""}
+        };
+        ArrayList<ArrayList<String>> gameBoard = new ArrayList<>();
+
+        // Initialize each row and add it to the board
+        gameBoard.add(new ArrayList<>(Arrays.asList("", "", "p1", "p1", "p1", "", "")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("", "", "", "p1", "", "", "")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("p2", "", "", "", "", "", "p4")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("p2", "p2", "", "", "", "p4", "p4")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("p2", "", "", "", "", "", "p4")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("", "", "", "p3", "", "", "")));
+        gameBoard.add(new ArrayList<>(Arrays.asList("", "", "p3", "p3", "p3", "", "")));
         // check alpha beta
         // konfigurasi (array)
         // rotate konfigurasi di eval
@@ -57,6 +77,7 @@ public class MeinClient {
         // function buat update konfigurasi / balikkin
         // function buat check possible moves: kalo move nya valid -> simpen move nya di node -> add child
         // genialen move berechnen
+        // bester Zug -> di convert ke 1D dulu
 //            move = new Move(2, 9);
 //            client.sendMove(move);
 //            move = new Move(9, 16);
@@ -72,8 +93,9 @@ public class MeinClient {
             }
             System.out.println();
         }
-        System.out.println(boardConfig.get(26));
-
+        Integer num = 2;
+        test(num);
+        System.out.println(num);
     }
 
     public static int alphaBeta(Node node, int depth, int alpha, int beta, boolean maximizingPlayer) {
@@ -86,6 +108,7 @@ public class MeinClient {
 
         if (maximizingPlayer) {
             int maxEval = Integer.MIN_VALUE;
+
             for (Node child : node.getChildren()) {
                 int eval = alphaBeta(child, depth - 1, alpha, beta, child.isMaximizer());
                 maxEval = Math.max(maxEval, eval);
@@ -127,6 +150,11 @@ public class MeinClient {
         System.out.println(nodePosition.getValue());
         count++;
         return value;
+    }
+
+    public static void test(int number){
+        Integer number2 = 0;
+        number = 0 + 5;
     }
 
     public static void printChildren(int depth, Node nodeTree) {
